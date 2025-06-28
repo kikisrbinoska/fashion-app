@@ -1,0 +1,25 @@
+.navbar {
+    background: linear-gradient(90deg, #a18cd1, #fbc2eb);
+    padding: 12px 24px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding-bottom: 4px;
+    transition: border-bottom 0.3s ease, color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #4b0082;
+}
+
+.active-link {
+    border-bottom: 2px solid #4b0082;
+    color: #4b0082;
+}
