@@ -12,6 +12,13 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Build Backend with Maven') {
+            steps {
+                dir('fashionApp') {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
         stage('Build Backend Image') {
             steps {
                 script {
