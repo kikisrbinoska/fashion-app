@@ -36,7 +36,7 @@ services:
       - fashion-network
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build: ./jenkins-docker
     container_name: jenkins
     ports:
       - "8081:8080"
