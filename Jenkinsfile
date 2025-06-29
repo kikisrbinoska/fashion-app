@@ -2,13 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id') 
-        DOCKERHUB_REPO = 'pipeline {
-    agent any
-
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id'      
-      DOCKERHUB_REPO = 'kikis/fashion'
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
+        DOCKERHUB_REPO = 'kikis/fashion'  
     }
 
     stages {
@@ -43,3 +38,4 @@ pipeline {
         }
     }
 }
+
