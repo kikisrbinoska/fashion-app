@@ -20,7 +20,7 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fashiondb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: kikis
     networks:
@@ -34,6 +34,7 @@ services:
       - backend
     networks:
       - fashion-network
+
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
@@ -47,6 +48,9 @@ services:
     user: root
     networks:
       - fashion-network
+    depends_on:
+      - backend
+      - frontend
 
 volumes:
   pgdata:
@@ -55,4 +59,3 @@ volumes:
 networks:
   fashion-network:
     driver: bridge
-
