@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
-        DOCKERHUB_REPO = 'kikis/fashion'  
+        DOCKERHUB_REPO = 'kikisrbinoska/fashion'  
     }
 
     stages {
