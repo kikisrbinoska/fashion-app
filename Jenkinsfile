@@ -1,9 +1,14 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3.8.6-openjdk-17'
+            args '-v $HOME/.m2:/root/.m2'
+       }
+    }
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
-        DOCKERHUB_REPO = 'kikisrbinoska/fashion'  
+        DOCKERHUB_REPO = 'kikisrbinoska/fashion'
     }
 
     stages {
@@ -12,6 +17,7 @@ pipeline {
                 checkout scm
             }
         }
+
         stage('Build Backend with Maven') {
             steps {
                 dir('fashionApp') {
@@ -19,6 +25,7 @@ pipeline {
                 }
             }
         }
+
         stage('Build Backend Image') {
             steps {
                 script {
@@ -26,13 +33,15 @@ pipeline {
                 }
             }
         }
+
         stage('Build Frontend Image') {
             steps {
                 script {
-                    docker.build("${env.DOCKERHUB_REPO}-frontend", "./fashion-frontend")
+                    docker.build("${env.DOCKERHUB_REPO}-frontend", "./fashion-fr")
                 }
             }
         }
+
         stage('Push Images') {
             steps {
                 script {
