@@ -51,7 +51,8 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
                     sh '''
-                        docker run --rm -v $KUBECONFIG:/kubeconfig \
+                        file $KUBECONFIG
+		        docker run --rm -v $KUBECONFIG:/kubeconfig:ro \
                         -v $(pwd)/k8s:/k8s \
                         bitnami/kubectl:latest \
                         --kubeconfig=/kubeconfig apply -f /k8s -n fashion-app
