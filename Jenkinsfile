@@ -55,6 +55,15 @@ pipeline {
                     }
                 }
             }
+	stage('Deploy to Kubernetes') {
+	   agent any
+	   steps {
+	        withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
+         	   sh 'kubectl apply -f k8s/ -n fashion-app'
+        }
+    }
+}
+
         }
     }
 }

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fashion-backend
+  namespace: fashion-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fashion-backend
+  template:
+    metadata:
+      labels:
+        app: fashion-backend
+    spec:
+      containers:
+      - name: fashion-backend
+        image: kikisrbinoska/fashion-backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://postgres:5432/fashiondb
+        - name: SPRING_DATASOURCE_USERNAME
+          value: postgres
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+

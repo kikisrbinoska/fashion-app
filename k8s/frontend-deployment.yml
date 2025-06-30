@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fashion-frontend
+  namespace: fashion-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fashion-frontend
+  template:
+    metadata:
+      labels:
+        app: fashion-frontend
+    spec:
+      containers:
+      - name: fashion-frontend
+        image: kikisrbinoska/fashion-frontend:latest
+        ports:
+        - containerPort: 80
