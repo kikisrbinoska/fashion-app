@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-	docker {
-            image 'maven:3.9.4-eclipse-temurin-17'
-            args '-v $HOME/.m2:/root/.m2'
-        }
-    }
+    agent none
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
@@ -19,6 +14,12 @@ pipeline {
         }
 
         stage('Build Backend with Maven') {
+	    agent {
+                docker {
+                    image 'maven:3.9.4-eclipse-temurin-17'
+                    args '-v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
                 dir('fashionApp') {
                     sh 'mvn clean package -DskipTests'
