@@ -49,7 +49,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             agent any
             steps {
-                withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
+                withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
                     sh '''
                         docker run --rm -v $KUBECONFIG:/kubeconfig \
                         -v $(pwd)/k8s:/k8s \
