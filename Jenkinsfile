@@ -49,7 +49,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
            agent {
               docker {
-                image: 'bitnami/kubectl:latest'
+                image 'bitnami/kubectl:latest'
               }
            }
            steps {
