@@ -55,8 +55,11 @@ pipeline {
             }
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
-                            sh 'kubectl --kubeconfig=$KUBECONFIG get nodes'
-                                             
+                         sh '''
+                            sed -i "s|C:\\\\Users\\\\krist\\\\.minikube|/root/.minikube|g" $KUBECONFIG
+                            kubectl --kubeconfig=$KUBECONFIG get nodes
+                            kubectl --kubeconfig=$KUBECONFIG apply -f k8s/ -n fashion-app
+                         '''                                             
                 }
             }
         }
