@@ -8,14 +8,14 @@ pipeline {
 
     stages {
         stage('Checkout') {
-	    agent any
+            agent any
             steps {
                 checkout scm
             }
         }
 
         stage('Build Backend with Maven') {
-	    agent {
+            agent {
                 docker {
                     image 'maven:3.9.4-eclipse-temurin-17'
                     args '-v $HOME/.m2:/root/.m2'
@@ -47,6 +47,7 @@ pipeline {
         }
 
         stage('Push Images') {
+            agent any
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials-id') {
@@ -55,15 +56,15 @@ pipeline {
                     }
                 }
             }
-	stage('Deploy to Kubernetes') {
-	   agent any
-	   steps {
-	        withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
-         	   sh 'kubectl apply -f k8s/ -n fashion-app'
         }
-    }
-}
 
+        stage('Deploy to Kubernetes') {
+            agent any
+            steps {
+                withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
+                    sh 'kubectl apply -f k8s/ -n fashion-app'
+                }
+            }
         }
     }
 }
