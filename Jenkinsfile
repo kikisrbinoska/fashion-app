@@ -47,23 +47,22 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
-	  agent {
-            docker {
-               image 'bitnami/kubectl:latest'
-               args '--entrypoint=""'
-             }
-           }
-          steps {
-             withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
-              script {
-                 docker.image('bitnami/kubectl:latest').inside("-v C:/Users/krist/.minikube:/root/.minikube:ro") {
-                     sh 'kubectl --kubeconfig=$KUBECONFIG get nodes'
-                 }
-              }
-          }
-       }
-
-
+            agent {
+                docker {
+                    image 'bitnami/kubectl:latest'
+                    args '--entrypoint=""'
+                }
+            }
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
+                    script {
+                        docker.image('bitnami/kubectl:latest').inside("-v C:/Users/krist/.minikube:/root/.minikube:ro") {
+                            sh 'kubectl --kubeconfig=$KUBECONFIG get nodes'
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
