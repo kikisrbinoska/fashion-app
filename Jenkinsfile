@@ -49,7 +49,7 @@ pipeline {
         stage('Push Images') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKERHUB_CREDENTIALS}") {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials-id') {
                         docker.image("${env.DOCKERHUB_REPO}-backend").push('latest')
                         docker.image("${env.DOCKERHUB_REPO}-frontend").push('latest')
                     }
