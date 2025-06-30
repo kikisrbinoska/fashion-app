@@ -59,17 +59,19 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
-        agent any
-        steps {
-           withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
-            sh '''
-                export KUBECONFIG=$KUBECONFIG
-                kubectl config use-context minikube
-                kubectl apply -f k8s/ -n fashion-app
-            '''
-           }
-       }
-    }
+          agent any
+          steps {
+            withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
+              sh '''
+                docker run --rm -v $KUBECONFIG:/kubeconfig \
+                -v $(pwd)/k8s:/k8s \
+                bitnami/kubectl:latest \
+                --kubeconfig=/kubeconfig apply -f /k8s -n fashion-app
+             '''
+            }
+         }
+     }
+
 
 
     }
