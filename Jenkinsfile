@@ -46,34 +46,19 @@ pipeline {
             }
         }
 
-        stage('Push Images') {
+        stage('Deploy to Kubernetes') {
             agent any
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials-id') {
-                        docker.image("${env.DOCKERHUB_REPO}-backend").push('latest')
-                        docker.image("${env.DOCKERHUB_REPO}-frontend").push('latest')
-                    }
+                withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
+                    sh '''
+                        docker run --rm -v $KUBECONFIG:/kubeconfig \
+                        -v $(pwd)/k8s:/k8s \
+                        bitnami/kubectl:latest \
+                        --kubeconfig=/kubeconfig apply -f /k8s -n fashion-app
+                    '''
                 }
             }
         }
-
-        stage('Deploy to Kubernetes') {
-          agent any
-          steps {
-            withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
-              sh '''
-                docker run --rm -v $KUBECONFIG:/kubeconfig \
-                -v $(pwd)/k8s:/k8s \
-                bitnami/kubectl:latest \
-                --kubeconfig=/kubeconfig apply -f /k8s -n fashion-app
-             '''
-            }
-         }
-     }
-
-
-
     }
 }
 
