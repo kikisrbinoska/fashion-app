@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.4-eclipse-temurin-17'
-            args '-v $HOME/.m2:/root/.m2'
-       }
-    }
+    agent any
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
@@ -37,7 +32,7 @@ pipeline {
         stage('Build Frontend Image') {
             steps {
                 script {
-                    docker.build("${env.DOCKERHUB_REPO}-frontend", "./fashion-fr")
+                    docker.build("${env.DOCKERHUB_REPO}-frontend", "./fashion-frontend")
                 }
             }
         }
@@ -45,7 +40,7 @@ pipeline {
         stage('Push Images') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials-id') {
+                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKERHUB_CREDENTIALS}") {
                         docker.image("${env.DOCKERHUB_REPO}-backend").push('latest')
                         docker.image("${env.DOCKERHUB_REPO}-frontend").push('latest')
                     }
