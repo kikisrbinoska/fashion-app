@@ -50,15 +50,13 @@ pipeline {
             agent {
                 docker {
                     image 'bitnami/kubectl:latest'
-                    args '--entrypoint=""'
+                    args '--entrypoint="" -v C:/Users/krist/.minikube:/root/.minikube:ro'
                 }
             }
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
-                    script {
-                        docker.image('bitnami/kubectl:latest').inside("-v C:/Users/krist/.minikube:/root/.minikube:ro") {
                             sh 'kubectl --kubeconfig=$KUBECONFIG get nodes'
-                        }
+                        
                     }
                 }
             }
