@@ -50,16 +50,15 @@ pipeline {
             agent {
                 docker {
                     image 'bitnami/kubectl:latest'
-                    args '--entrypoint="" -v C:/Users/krist/.minikube:/root/.minikube:ro'
+                    args '--entrypoint=""'
                 }
             }
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
                          sh '''
-                            set -x
-                            sed -i "s|C:\\\\Users\\\\krist\\\\.minikube|/root/.minikube|g" $KUBECONFIG
-                            kubectl --kubeconfig=$KUBECONFIG get nodes
-                            kubectl --kubeconfig=$KUBECONFIG apply -f ./k8s/ -n fashion-app
+                             set -x
+                             kubectl --kubeconfig=$KUBECONFIG get nodes
+                             kubectl --kubeconfig=$KUBECONFIG apply -f ./k8s/ -n fashion-app
                          '''                                             
                 }
             }
