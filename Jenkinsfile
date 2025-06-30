@@ -56,7 +56,7 @@ pipeline {
           steps {
              withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
                  sh '''
-                    kubectl --kubeconfig=$KUBECONFIG apply -f k8s -n fashion-app
+                    kubectl --kubeconfig=$KUBECONFIG apply -f k8s -n fashion-app --validate=false
                     '''
               }
           }
