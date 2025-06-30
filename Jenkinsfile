@@ -56,8 +56,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
                             sh 'kubectl --kubeconfig=$KUBECONFIG get nodes'
-                        
-                    }
+                                             
                 }
             }
         }
