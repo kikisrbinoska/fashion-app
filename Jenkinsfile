@@ -47,17 +47,20 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
-           agent {
-              docker {
-                image 'bitnami/kubectl:latest'
+	  agent {
+            docker {
+               image 'bitnami/kubectl:latest'
+             }
+           }
+          steps {
+             withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
+                 sh '''
+                    kubectl --kubeconfig=$KUBECONFIG apply -f k8s -n fashion-app
+                    '''
               }
-           }
-           steps {
-               withKubeConfig(credentialsId: 'kubeconfig-id') {
-                   sh 'kubectl apply -f k8s -n fashion-app'
-               }
-           }
-        }
+          }
+       }
+
 
     }
 }
