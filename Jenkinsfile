@@ -61,7 +61,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
 	    agent any
     	    steps {
-        	configFileProvider([configFile(fileId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
+        	withCridentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
             	sh 'kubectl apply -f k8s/ -n fashion-app'
         	}
     	    }
