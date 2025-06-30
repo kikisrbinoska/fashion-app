@@ -1,4 +1,4 @@
-pipeline {
+ppipeline {
     agent none
 
     environment {
@@ -8,6 +8,7 @@ pipeline {
 
     stages {
         stage('Checkout') {
+a	    agent any
             steps {
                 checkout scm
             }
@@ -28,6 +29,7 @@ pipeline {
         }
 
         stage('Build Backend Image') {
+            agent any
             steps {
                 script {
                     docker.build("${env.DOCKERHUB_REPO}-backend", "./fashionApp")
@@ -36,6 +38,7 @@ pipeline {
         }
 
         stage('Build Frontend Image') {
+            agent any
             steps {
                 script {
                     docker.build("${env.DOCKERHUB_REPO}-frontend", "./fashion-frontend")
