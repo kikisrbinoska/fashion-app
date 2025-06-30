@@ -55,11 +55,11 @@ pipeline {
            }
           steps {
              withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
-                 sh '''
-                     kubectl --kubeconfig=$KUBECONFIG get nodes
-                     kubectl --kubeconfig=$KUBECONFIG apply -f k8s -n fashion-app
-                    '''
-              }
+                docker.image('bitnami/kubectl:latest').inside("-v C:/Users/krist/.minikube:/root/.minikube:ro") {
+                   sh 'kubectl --kubeconfig=$KUBECONFIG get nodes'
+                }
+             }
+
           }
        }
 
