@@ -1,0 +1,43 @@
+.model-card {
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(135deg, #a18cd1, #fbc2eb); /* виолетов градиент */
+    color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+.brand-info {
+    color: black;
+}
+.model-card:hover {
+    transform: scale(1.02);
+}
+
+.model-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #fff;
+}
+
+.model-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.model-info h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.model-info p {
+    margin: 3px 0;
+    font-size: 0.95rem;
+    color: #f0f0f0;
+}

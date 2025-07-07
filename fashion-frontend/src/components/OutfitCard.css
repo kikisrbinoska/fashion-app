@@ -1,0 +1,43 @@
+.outfit-card {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #89f7fe, #66a6ff); /* Син градиент */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    color: black;
+    transition: transform 0.2s ease;
+}
+.outfit-info {
+    color: black;
+}
+.outfit-card:hover {
+    transform: scale(1.02);
+}
+
+.outfit-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #fff;
+}
+
+.outfit-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.outfit-info h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.outfit-info p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    color: #f0f0f0;
+}
